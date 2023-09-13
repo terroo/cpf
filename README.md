@@ -43,5 +43,12 @@ cpf 46318374892
 
 ---
 
-# Assista ao vídeo
+# Versão Web
+### Feita com [Vue.js](https://github.com/vuejs) e [TailwindCSS](https://github.com/tailwindlabs/tailwindcss) rodando no [Apache](https://github.com/apache) com [C++](https://terminalroot.com.br/tags#cpp)
+Disponível no diretório [api/](./api)
+> Assista ao vídeo: <https://youtu.be/kTySQQT7_Sg>
+
+---
+
+# Assista ao vídeo do Modo CLI
 ## <https://youtu.be/_WTWl66TrlY>

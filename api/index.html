@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Gerador de CPF</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+
+    <div id="app" class="mx-auto text-center p-4">
+      <h1 class="text-6xl p-4 font-bold text-gray-700">Gerador de CPF</h1>
+      <input type="text" class="w-full border-2 px-6 py-2 text-center
+        border-gray-500 text-4xl text-purple-800 rounded" 
+        placeholder="Informe ou gere o CPF"
+        :value="check == true ? format : cpf"
+        v-model="cpf"
+      >
+      <br>
+      <label class="text-4xl my-1 text-gray-400">Gerar formatação</label>
+      <input type="checkbox" class="checked:bg-blue-600 m-2 w-8 h-8" v-model="check">
+      <p>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white
+                       font-bold py-2 px-4 rounded my-4 mx-1 w-1/4 text-4xl"
+         @click="exibeCPF">
+        Gerar CPF</button>
+        <button class="bg-purple-500 hover:bg-purple-700 text-white
+                       font-bold py-2 px-4 rounded my-4 mx-1 w-1/4 text-4xl"
+        @click="validCPF">
+        Validar CPF</button>
+      </p>
+      <p v-if="valid == 'null'"></p>
+      <p v-else-if="valid == 'true'" class="text-green-600 font-bold text-2xl">✔ CPF válido</p>
+      <p v-else-if="valid == 'false'" class="text-red-600 font-bold text-2xl">✖ CPF Inválido</p>
+
+    </div>
+
+    <script>
+      const { createApp, ref } = Vue
+
+      createApp({
+        setup() {
+          const cpf = ref('')
+          const format = ref('')
+          const check = ref('false')
+          const valid = ref('null')
+          return {
+            cpf,
+            format,
+            check,
+            valid
+          }
+        },
+
+        methods: {
+          exibeCPF: function(){
+            this.valid = 'null'
+            fetch('http://localhost/cgi-bin/api/cpf/')
+              .then(responde => {
+                 responde.json()
+                 .then(data => {
+                   this.cpf = data.cpf
+                   this.format = data.format
+                 })
+              })
+          },
+
+          validCPF: function(){
+            this.valid = 'null'
+            fetch('http://localhost/cgi-bin/api/cpf?cpf=' + this.cpf)
+              .then(responde => {
+                 responde.json()
+                 .then(data => {
+                   this.valid = data.check
+                 })
+              })
+          }
+        }
+
+      }).mount('#app')
+    </script> 
+  </body>
+</html>

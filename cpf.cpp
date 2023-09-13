@@ -42,9 +42,21 @@ bool Cpf::check_cpf(std::string * cpf){
   (*cpf).erase(std::remove((*cpf).begin(), (*cpf).end(), '-'), (*cpf).end());
 
   // Verificar se o CPF é somente números
-  if(!std::all_of(cpf->begin(), cpf->end(), ::isdigit)){
+  if(!std::all_of(cpf->begin(), cpf->end(), ::isdigit) || 
+      cpf->size() != 11){
     return false;
   }
+
+  std::vector<std::string> v = {
+    "00000000000", "11111111111", "22222222222", "33333333333", 
+    "44444444444", "55555555555", "66666666666", "77777777777", 
+    "88888888888", "99999999999"
+  };
+
+  if(std::find(v.begin(), v.end(), *cpf) != v.end()){
+    return false;
+  }
+
 
   this->m_numbs = cpf->substr(0, 9);
   generate_first_digit();

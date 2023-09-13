@@ -4,6 +4,7 @@
 #include <memory>
 #include <ctime>
 #include <algorithm>
+#include <vector>
 
 class Cpf {
   public:
